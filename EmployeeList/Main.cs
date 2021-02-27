@@ -17,8 +17,7 @@ namespace EmployeeList
         private string _filePath = 
             Path.Combine(Environment.CurrentDirectory, "Employees.txt");
 
-        private FileHelper<List<Employee>> _fileHelper =
-            new FileHelper<List<Employee>>(Program.FilePath);
+        //private FileHelper<List<Employee>> _fileHelper = new FileHelper<List<Employee>>(Program.FilePath);
 
         public Main()
         {
