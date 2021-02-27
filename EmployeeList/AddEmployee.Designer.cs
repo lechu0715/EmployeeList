@@ -39,12 +39,13 @@ namespace EmployeeList
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lbDateEnd = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.rtbComments = new System.Windows.Forms.RichTextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.btnConfirm = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.cbHired = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // tbId
@@ -126,14 +127,14 @@ namespace EmployeeList
             this.label3.TabIndex = 11;
             this.label3.Text = "Data Zatrudnienia:";
             // 
-            // label4
+            // lbDateEnd
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 136);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(113, 17);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Data Zwolnienia:";
+            this.lbDateEnd.AutoSize = true;
+            this.lbDateEnd.Location = new System.Drawing.Point(12, 136);
+            this.lbDateEnd.Name = "lbDateEnd";
+            this.lbDateEnd.Size = new System.Drawing.Size(113, 17);
+            this.lbDateEnd.TabIndex = 12;
+            this.lbDateEnd.Text = "Data Zwolnienia:";
             // 
             // label5
             // 
@@ -146,7 +147,7 @@ namespace EmployeeList
             // 
             // rtbComments
             // 
-            this.rtbComments.Location = new System.Drawing.Point(147, 188);
+            this.rtbComments.Location = new System.Drawing.Point(147, 221);
             this.rtbComments.Name = "rtbComments";
             this.rtbComments.Size = new System.Drawing.Size(200, 101);
             this.rtbComments.TabIndex = 14;
@@ -155,7 +156,7 @@ namespace EmployeeList
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 191);
+            this.label6.Location = new System.Drawing.Point(88, 221);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(50, 17);
             this.label6.TabIndex = 15;
@@ -163,7 +164,7 @@ namespace EmployeeList
             // 
             // btnConfirm
             // 
-            this.btnConfirm.Location = new System.Drawing.Point(147, 295);
+            this.btnConfirm.Location = new System.Drawing.Point(147, 328);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(99, 40);
             this.btnConfirm.TabIndex = 16;
@@ -173,7 +174,7 @@ namespace EmployeeList
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(248, 295);
+            this.btnCancel.Location = new System.Drawing.Point(248, 328);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(99, 40);
             this.btnCancel.TabIndex = 17;
@@ -181,17 +182,29 @@ namespace EmployeeList
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // cbHired
+            // 
+            this.cbHired.AutoSize = true;
+            this.cbHired.Location = new System.Drawing.Point(147, 190);
+            this.cbHired.Name = "cbHired";
+            this.cbHired.Size = new System.Drawing.Size(148, 21);
+            this.cbHired.TabIndex = 18;
+            this.cbHired.Text = "Aktywny pracownik";
+            this.cbHired.UseVisualStyleBackColor = true;
+            this.cbHired.CheckedChanged += new System.EventHandler(this.cbHired_CheckedChanged);
+            // 
             // AddEmployee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(362, 342);
+            this.ClientSize = new System.Drawing.Size(362, 373);
+            this.Controls.Add(this.cbHired);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnConfirm);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.rtbComments);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lbDateEnd);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -202,6 +215,8 @@ namespace EmployeeList
             this.Controls.Add(this.dtpStartOccupation);
             this.Controls.Add(this.tbFirstName);
             this.Controls.Add(this.tbId);
+            this.MaximumSize = new System.Drawing.Size(380, 420);
+            this.MinimumSize = new System.Drawing.Size(380, 420);
             this.Name = "AddEmployee";
             this.Text = "Dodaj Pracownika";
             this.ResumeLayout(false);
@@ -221,11 +236,12 @@ namespace EmployeeList
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lbDateEnd;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox rtbComments;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnConfirm;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.CheckBox cbHired;
     }
 }

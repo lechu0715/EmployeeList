@@ -14,44 +14,33 @@ namespace EmployeeList
 {
     public partial class Main : Form
     {
-        private string _filePath = 
-            Path.Combine(Environment.CurrentDirectory, "Employees.txt");
-
-        //private FileHelper<List<Employee>> _fileHelper = new FileHelper<List<Employee>>(Program.FilePath);
+        private FileHelper<List<Employee>> _fileHelper = 
+            new FileHelper<List<Employee>>(Program.FilePath);
 
         public Main()
         {
             InitializeComponent();
-
-            var employees = DeserializeFromFile();
-
-            dgvEmployeeList.DataSource = employees;
+            RefreshDiary();
+            SetColumnsHeader();
         }
 
-        public void SerializeToFile(List<Employee> employees)
+        private void RefreshDiary()
         {
-            var serializer = new XmlSerializer(typeof(List<Employee>));
-
-            using (var streamWriter = new StreamWriter(_filePath))
-            {
-                serializer.Serialize(streamWriter, employees);
-                streamWriter.Close();
-            }
+            var employees = _fileHelper.DeserializeFromFile();
+            var employeesDescending = employees.OrderBy(x => x.Id).ToList();
+            dgvEmployeeList.DataSource = employeesDescending;
         }
 
-        public List<Employee> DeserializeFromFile()
+        private void SetColumnsHeader()
         {
-            if (!File.Exists(_filePath))
-                return new List<Employee>();
-
-            var serializer = new XmlSerializer(typeof(List<Employee>));
-
-            using (var streamReader = new StreamReader(_filePath))
-            {
-                var employees = (List<Employee>)serializer.Deserialize(streamReader);
-                streamReader.Close();
-                return employees;
-            }
+            dgvEmployeeList.Columns[0].HeaderText = "Numer";
+            dgvEmployeeList.Columns[1].HeaderText = "Imię";
+            dgvEmployeeList.Columns[2].HeaderText = "Nazwisko";
+            dgvEmployeeList.Columns[3].HeaderText = "Data Zatrudnienia";
+            dgvEmployeeList.Columns[4].HeaderText = "Data Zwolnienia";
+            dgvEmployeeList.Columns[5].HeaderText = "Zarobki";
+            dgvEmployeeList.Columns[6].HeaderText = "Uwagi";
+            dgvEmployeeList.Columns[7].Visible = false;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -73,15 +62,34 @@ namespace EmployeeList
             addEmployee.ShowDialog();
         }
 
-        private void btnFired_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            var employees = DeserializeFromFile();
-            dgvEmployeeList.DataSource = employees;
+            RefreshDiary();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex == 0)
+            {
+                RefreshDiary();
+            }
+            else if (comboBox1.SelectedIndex == 1)
+            {
+                var employees = _fileHelper.DeserializeFromFile();
+                var activeEmployee = employees.Where(x => x.EndDate == default).ToList();
+
+                var employeesDescending = activeEmployee.OrderBy(x => x.Id).ToList();
+                dgvEmployeeList.DataSource = employeesDescending;
+            }
+            else
+            {
+                var employees = _fileHelper.DeserializeFromFile();
+                var activeEmployee = employees.Where(x => x.EndDate != default).ToList();
+
+                var employeesDescending = activeEmployee.OrderBy(x => x.Id).ToList();
+                dgvEmployeeList.DataSource = employeesDescending;
+            }
         }
     }
 }

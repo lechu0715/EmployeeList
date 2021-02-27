@@ -14,66 +14,51 @@ namespace EmployeeList
 {
     public partial class AddEmployee : Form
     {
-        private string _filePath =
-            Path.Combine(Environment.CurrentDirectory, "Employees.txt");
         private int _employeeId;
+        private Employee _employee;
+
+        private FileHelper<List<Employee>> _fileHelper =
+            new FileHelper<List<Employee>>(Program.FilePath);
 
         public AddEmployee(int id = 0)
         {
             InitializeComponent();
             _employeeId = id;
 
-            if (id != 0)
-            {
-                var employees = DeserializeFromFile();
-                var employee = employees.FirstOrDefault(x => x.Id == id);
+            GetEmployeeData();
+            tbFirstName.Select();
+        }
 
-                if (employee == null)
+        private void GetEmployeeData()
+        {
+            if (_employeeId != 0)
+            {
+                var employees = _fileHelper.DeserializeFromFile();
+                _employee = employees.FirstOrDefault(x => x.Id == _employeeId);
+
+                if (_employee == null)
                 {
                     throw new Exception("Brak użytkownika o podanym Id");
                 }
 
-                tbId.Text = employee.Id.ToString();
-                tbFirstName.Text = employee.FirstName;
-                tbLastName.Text = employee.LastName;
-                dtpStartOccupation.Value = employee.StartDate;
-                dtpEndOccupation.Value = employee.EndDate;
-                tbSalary.Text = employee.Salary.ToString();
-                rtbComments.Text = employee.Comments;
-            }
-
-
-        }
-
-        public void SerializeToFile(List<Employee> employees)
-        {
-            var serializer = new XmlSerializer(typeof(List<Employee>));
-
-            using (var streamWriter = new StreamWriter(_filePath))
-            {
-                serializer.Serialize(streamWriter, employees);
-                streamWriter.Close();
+                FillTextBoxes();
             }
         }
 
-        public List<Employee> DeserializeFromFile()
+        private void FillTextBoxes()
         {
-            if (!File.Exists(_filePath))
-                return new List<Employee>();
-
-            var serializer = new XmlSerializer(typeof(List<Employee>));
-
-            using (var streamReader = new StreamReader(_filePath))
-            {
-                var employees = (List<Employee>)serializer.Deserialize(streamReader);
-                streamReader.Close();
-                return employees;
-            }
+            tbId.Text = _employee.Id.ToString();
+            tbFirstName.Text = _employee.FirstName;
+            tbLastName.Text = _employee.LastName;
+            dtpStartOccupation.Value = _employee.StartDate;
+            dtpEndOccupation.Value = _employee.EndDate;
+            tbSalary.Text = _employee.Salary.ToString();
+            rtbComments.Text = _employee.Comments;
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            var employees = DeserializeFromFile();
+            var employees = _fileHelper.DeserializeFromFile();
 
             if (_employeeId != 0)
             {
@@ -86,19 +71,30 @@ namespace EmployeeList
                 _employeeId = employeeWithHighestId == null ? 1 : employeeWithHighestId.Id + 1;
             }
 
+
             var employee = new Employee
             {
+
                 Id = _employeeId,
                 FirstName = tbFirstName.Text,
                 LastName = tbLastName.Text,
                 StartDate = dtpStartOccupation.Value,
                 EndDate = dtpEndOccupation.Value,
                 Salary = Convert.ToInt32(tbSalary.Text),
-                Comments = rtbComments.Text
+                Comments = rtbComments.Text,
+                Hired = cbHired.Checked
+
             };
 
+            if (employee.Hired)
+            {
+                employee.EndDate = default;
+            }
+
             employees.Add(employee);
-            SerializeToFile(employees);
+            _fileHelper.SerializeToFile(employees);
+
+
 
             Close();
         }
@@ -106,6 +102,20 @@ namespace EmployeeList
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void cbHired_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbHired.Checked)
+            {
+                dtpEndOccupation.Visible = false;
+                lbDateEnd.Visible = false;
+            }
+            else
+            {
+                dtpEndOccupation.Visible = true;
+                lbDateEnd.Visible = true;
+            }
         }
     }
 }

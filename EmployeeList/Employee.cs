@@ -15,5 +15,6 @@ namespace EmployeeList
         public DateTime EndDate { get; set; }
         public int Salary { get; set; }
         public string Comments { get; set; }
+        public bool Hired { get; set; }
     }
 }
