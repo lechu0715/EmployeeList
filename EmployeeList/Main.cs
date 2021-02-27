@@ -22,11 +22,13 @@ namespace EmployeeList
         public Main()
         {
             InitializeComponent();
-            var employees = new List<Employee>();
 
+            var employees = DeserializeFromFile();
+
+            dgvEmployeeList.DataSource = employees;
         }
 
-        public void SerializeToFIle(List<Employee> employees)
+        public void SerializeToFile(List<Employee> employees)
         {
             var serializer = new XmlSerializer(typeof(List<Employee>));
 
@@ -54,12 +56,21 @@ namespace EmployeeList
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-
+            var addEmployee = new AddEmployee();
+            addEmployee.ShowDialog();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
+            if (dgvEmployeeList.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Prosze zaznacz pracownika którego dane chcesz edytować");
+                return;
+            }
 
+            var addEmployee = new AddEmployee(
+                Convert.ToInt32(dgvEmployeeList.SelectedRows[0].Cells[0].Value));
+            addEmployee.ShowDialog();
         }
 
         private void btnFired_Click(object sender, EventArgs e)
@@ -69,7 +80,8 @@ namespace EmployeeList
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-
+            var employees = DeserializeFromFile();
+            dgvEmployeeList.DataSource = employees;
         }
     }
 }
