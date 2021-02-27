@@ -16,10 +16,33 @@ namespace EmployeeList
     {
         private string _filePath =
             Path.Combine(Environment.CurrentDirectory, "Employees.txt");
+        private int _employeeId;
 
         public AddEmployee(int id = 0)
         {
             InitializeComponent();
+            _employeeId = id;
+
+            if (id != 0)
+            {
+                var employees = DeserializeFromFile();
+                var employee = employees.FirstOrDefault(x => x.Id == id);
+
+                if (employee == null)
+                {
+                    throw new Exception("Brak użytkownika o podanym Id");
+                }
+
+                tbId.Text = employee.Id.ToString();
+                tbFirstName.Text = employee.FirstName;
+                tbLastName.Text = employee.LastName;
+                dtpStartOccupation.Value = employee.StartDate;
+                dtpEndOccupation.Value = employee.EndDate;
+                tbSalary.Text = employee.Salary.ToString();
+                rtbComments.Text = employee.Comments;
+            }
+
+
         }
 
         public void SerializeToFile(List<Employee> employees)
@@ -52,13 +75,20 @@ namespace EmployeeList
         {
             var employees = DeserializeFromFile();
 
-            var employeeWithHighestId = employees.OrderByDescending(x => x.Id).FirstOrDefault();
+            if (_employeeId != 0)
+            {
+                employees.RemoveAll(x => x.Id == _employeeId);
+            }
+            else
+            {
+                var employeeWithHighestId = employees.OrderByDescending(x => x.Id).FirstOrDefault();
 
-            var employeeId = employeeWithHighestId == null ? 1 : employeeWithHighestId.Id + 1;
+                _employeeId = employeeWithHighestId == null ? 1 : employeeWithHighestId.Id + 1;
+            }
 
             var employee = new Employee
             {
-                Id = employeeId,
+                Id = _employeeId,
                 FirstName = tbFirstName.Text,
                 LastName = tbLastName.Text,
                 StartDate = dtpStartOccupation.Value,
@@ -75,7 +105,7 @@ namespace EmployeeList
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-
+            Close();
         }
     }
 }
