@@ -51,6 +51,8 @@ namespace EmployeeList
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
+            
+
             if (dgvEmployeeList.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Prosze zaznacz pracownika którego dane chcesz edytować");
@@ -91,5 +93,6 @@ namespace EmployeeList
                 dgvEmployeeList.DataSource = employeesDescending;
             }
         }
+
     }
 }

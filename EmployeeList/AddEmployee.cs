@@ -33,6 +33,8 @@ namespace EmployeeList
         {
             if (_employeeId != 0)
             {
+                Text = "Edytowanie danych pracownika";
+
                 var employees = _fileHelper.DeserializeFromFile();
                 _employee = employees.FirstOrDefault(x => x.Id == _employeeId);
 
@@ -42,6 +44,7 @@ namespace EmployeeList
                 }
 
                 FillTextBoxes();
+
             }
         }
 
@@ -51,7 +54,27 @@ namespace EmployeeList
             tbFirstName.Text = _employee.FirstName;
             tbLastName.Text = _employee.LastName;
             dtpStartOccupation.Value = _employee.StartDate;
-            //dtpEndOccupation.Value = _dateEnd;
+            
+            if (_employee.EndDate == null)
+            {
+                dtpEndOccupation.Visible = false;
+                cbHired.Checked = true;
+            }
+            else
+            {
+                cbHired.Checked = false;
+
+                try
+                {
+                    dtpEndOccupation.Value = (DateTime)_employee.EndDate;
+                }
+                catch
+                {
+                    return;
+                }
+                
+            }
+
             tbSalary.Text = _employee.Salary.ToString();
             rtbComments.Text = _employee.Comments;
         }
@@ -99,7 +122,6 @@ namespace EmployeeList
                 StartDate = dtpStartOccupation.Value,
                 EndDate = dtpEndOccupation.Value,
                 Salary = _salary,
-                //Salary = Convert.ToDecimal(tbSalary.Text),
                 Comments = rtbComments.Text,
                 Hired = cbHired.Checked
 
@@ -108,6 +130,7 @@ namespace EmployeeList
             if (employee.Hired)
             {
                 employee.EndDate = default;
+            
             }
 
 

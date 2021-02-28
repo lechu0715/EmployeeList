@@ -76,6 +76,7 @@ namespace EmployeeList
             this.dtpEndOccupation.Name = "dtpEndOccupation";
             this.dtpEndOccupation.Size = new System.Drawing.Size(200, 22);
             this.dtpEndOccupation.TabIndex = 5;
+            this.dtpEndOccupation.Visible = false;
             // 
             // tbLastName
             // 
@@ -86,7 +87,7 @@ namespace EmployeeList
             // 
             // tbSalary
             // 
-            this.tbSalary.Location = new System.Drawing.Point(147, 159);
+            this.tbSalary.Location = new System.Drawing.Point(147, 161);
             this.tbSalary.Name = "tbSalary";
             this.tbSalary.Size = new System.Drawing.Size(200, 22);
             this.tbSalary.TabIndex = 7;
@@ -136,11 +137,12 @@ namespace EmployeeList
             this.lbDateEnd.Size = new System.Drawing.Size(113, 17);
             this.lbDateEnd.TabIndex = 12;
             this.lbDateEnd.Text = "Data Zwolnienia:";
+            this.lbDateEnd.Visible = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 162);
+            this.label5.Location = new System.Drawing.Point(12, 164);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(60, 17);
             this.label5.TabIndex = 13;
@@ -148,7 +150,7 @@ namespace EmployeeList
             // 
             // rtbComments
             // 
-            this.rtbComments.Location = new System.Drawing.Point(147, 221);
+            this.rtbComments.Location = new System.Drawing.Point(147, 223);
             this.rtbComments.Name = "rtbComments";
             this.rtbComments.Size = new System.Drawing.Size(200, 101);
             this.rtbComments.TabIndex = 14;
@@ -157,7 +159,7 @@ namespace EmployeeList
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(88, 221);
+            this.label6.Location = new System.Drawing.Point(88, 223);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(50, 17);
             this.label6.TabIndex = 15;
@@ -165,7 +167,7 @@ namespace EmployeeList
             // 
             // btnConfirm
             // 
-            this.btnConfirm.Location = new System.Drawing.Point(147, 328);
+            this.btnConfirm.Location = new System.Drawing.Point(147, 330);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(99, 40);
             this.btnConfirm.TabIndex = 16;
@@ -175,7 +177,7 @@ namespace EmployeeList
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(248, 328);
+            this.btnCancel.Location = new System.Drawing.Point(248, 330);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(99, 40);
             this.btnCancel.TabIndex = 17;
@@ -186,7 +188,9 @@ namespace EmployeeList
             // cbHired
             // 
             this.cbHired.AutoSize = true;
-            this.cbHired.Location = new System.Drawing.Point(147, 190);
+            this.cbHired.Checked = true;
+            this.cbHired.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbHired.Location = new System.Drawing.Point(147, 192);
             this.cbHired.Name = "cbHired";
             this.cbHired.Size = new System.Drawing.Size(148, 21);
             this.cbHired.TabIndex = 18;
@@ -198,7 +202,7 @@ namespace EmployeeList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(362, 373);
+            this.ClientSize = new System.Drawing.Size(362, 378);
             this.Controls.Add(this.cbHired);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnConfirm);
@@ -216,8 +220,8 @@ namespace EmployeeList
             this.Controls.Add(this.dtpStartOccupation);
             this.Controls.Add(this.tbFirstName);
             this.Controls.Add(this.tbId);
-            this.MaximumSize = new System.Drawing.Size(380, 420);
-            this.MinimumSize = new System.Drawing.Size(380, 420);
+            this.MaximumSize = new System.Drawing.Size(380, 425);
+            this.MinimumSize = new System.Drawing.Size(380, 425);
             this.Name = "AddEmployee";
             this.Text = "Dodaj Pracownika";
             this.ResumeLayout(false);
