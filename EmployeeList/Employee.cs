@@ -12,8 +12,8 @@ namespace EmployeeList
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public int Salary { get; set; }
+        public DateTime? EndDate { get; set; }
+        public decimal Salary { get; set; } 
         public string Comments { get; set; }
         public bool Hired { get; set; }
     }

@@ -90,6 +90,7 @@ namespace EmployeeList
             this.tbSalary.Name = "tbSalary";
             this.tbSalary.Size = new System.Drawing.Size(200, 22);
             this.tbSalary.TabIndex = 7;
+            this.tbSalary.Text = "0";
             // 
             // lbId
             // 

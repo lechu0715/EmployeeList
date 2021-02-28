@@ -51,7 +51,7 @@ namespace EmployeeList
             tbFirstName.Text = _employee.FirstName;
             tbLastName.Text = _employee.LastName;
             dtpStartOccupation.Value = _employee.StartDate;
-            dtpEndOccupation.Value = _employee.EndDate;
+            //dtpEndOccupation.Value = _dateEnd;
             tbSalary.Text = _employee.Salary.ToString();
             rtbComments.Text = _employee.Comments;
         }
@@ -71,16 +71,35 @@ namespace EmployeeList
                 _employeeId = employeeWithHighestId == null ? 1 : employeeWithHighestId.Id + 1;
             }
 
+            decimal _salary = 0;
+
+            if (tbSalary.Text == null)
+            {
+                _salary = 0;
+            }
+            else
+            {
+                try
+                {
+                    _salary = Convert.ToDecimal(tbSalary.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("Proszę podać wartośc liczbową w polu zarobków");
+                    return;
+                }
+            }
+
 
             var employee = new Employee
             {
-
                 Id = _employeeId,
                 FirstName = tbFirstName.Text,
                 LastName = tbLastName.Text,
                 StartDate = dtpStartOccupation.Value,
                 EndDate = dtpEndOccupation.Value,
-                Salary = Convert.ToInt32(tbSalary.Text),
+                Salary = _salary,
+                //Salary = Convert.ToDecimal(tbSalary.Text),
                 Comments = rtbComments.Text,
                 Hired = cbHired.Checked
 
@@ -90,6 +109,7 @@ namespace EmployeeList
             {
                 employee.EndDate = default;
             }
+
 
             employees.Add(employee);
             _fileHelper.SerializeToFile(employees);
